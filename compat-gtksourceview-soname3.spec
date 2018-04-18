@@ -4,7 +4,7 @@
 #
 Name     : compat-gtksourceview-soname3
 Version  : 3.24.7
-Release  : 23
+Release  : 24
 URL      : https://download.gnome.org/sources/gtksourceview/3.24/gtksourceview-3.24.7.tar.xz
 Source0  : https://download.gnome.org/sources/gtksourceview/3.24/gtksourceview-3.24.7.tar.xz
 Summary  : Libraries and include files for GtkSourceView
@@ -33,6 +33,7 @@ BuildRequires : pkgconfig(libxml-2.0)
 BuildRequires : python3
 BuildRequires : vala
 BuildRequires : vala-bin
+BuildRequires : vala-dev
 BuildRequires : valgrind
 Patch1: cve-2017-14108.patch
 
@@ -94,7 +95,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1523381428
+export SOURCE_DATE_EPOCH=1524066302
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -113,7 +114,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1523381428
+export SOURCE_DATE_EPOCH=1524066302
 rm -rf %{buildroot}
 %make_install
 %find_lang gtksourceview-3.0
@@ -266,6 +267,8 @@ rm -rf %{buildroot}
 /usr/share/gtksourceview-3.0/styles/solarized-light.xml
 /usr/share/gtksourceview-3.0/styles/styles.rng
 /usr/share/gtksourceview-3.0/styles/tango.xml
+/usr/share/vala/vapi/gtksourceview-3.0.deps
+/usr/share/vala/vapi/gtksourceview-3.0.vapi
 
 %files dev
 %defattr(-,root,root,-)
