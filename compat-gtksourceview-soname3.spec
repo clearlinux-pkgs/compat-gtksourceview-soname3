@@ -4,33 +4,31 @@
 #
 Name     : compat-gtksourceview-soname3
 Version  : 3.24.7
-Release  : 31
+Release  : 32
 URL      : https://download.gnome.org/sources/gtksourceview/3.24/gtksourceview-3.24.7.tar.xz
 Source0  : https://download.gnome.org/sources/gtksourceview/3.24/gtksourceview-3.24.7.tar.xz
-Summary  : Libraries and include files for GtkSourceView
+Summary  : Source code editing widget
 Group    : Development/Tools
 License  : LGPL-2.1
-Requires: compat-gtksourceview-soname3-data
-Requires: compat-gtksourceview-soname3-lib
-Requires: compat-gtksourceview-soname3-doc
-Requires: compat-gtksourceview-soname3-locales
+Requires: compat-gtksourceview-soname3-data = %{version}-%{release}
+Requires: compat-gtksourceview-soname3-lib = %{version}-%{release}
+Requires: compat-gtksourceview-soname3-license = %{version}-%{release}
+Requires: compat-gtksourceview-soname3-locales = %{version}-%{release}
+BuildRequires : buildreq-gnome
+BuildRequires : buildreq-golang
+BuildRequires : buildreq-meson
 BuildRequires : docbook-xml
 BuildRequires : gettext
-BuildRequires : go
 BuildRequires : gobject-introspection
 BuildRequires : gobject-introspection-dev
 BuildRequires : gtk-doc
 BuildRequires : gtk-doc-dev
-BuildRequires : itstool
 BuildRequires : libxslt-bin
-BuildRequires : meson
-BuildRequires : ninja
 BuildRequires : perl(XML::Parser)
 BuildRequires : pkgconfig(gio-2.0)
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(gtk+-3.0)
 BuildRequires : pkgconfig(libxml-2.0)
-BuildRequires : python3
 BuildRequires : vala
 BuildRequires : vala-bin
 BuildRequires : vala-dev
@@ -38,9 +36,9 @@ BuildRequires : valgrind
 Patch1: cve-2017-14108.patch
 
 %description
-GtkSourceview is a library that adds syntax highlighting,
-line numbers, and other programming-editor features.
-GtkSourceView specializes these features for a code editor.
+General Information
+===================
+This is version 3.24.7 of GtkSourceView.
 
 %package data
 Summary: data components for the compat-gtksourceview-soname3 package.
@@ -53,9 +51,10 @@ data components for the compat-gtksourceview-soname3 package.
 %package dev
 Summary: dev components for the compat-gtksourceview-soname3 package.
 Group: Development
-Requires: compat-gtksourceview-soname3-lib
-Requires: compat-gtksourceview-soname3-data
-Provides: compat-gtksourceview-soname3-devel
+Requires: compat-gtksourceview-soname3-lib = %{version}-%{release}
+Requires: compat-gtksourceview-soname3-data = %{version}-%{release}
+Provides: compat-gtksourceview-soname3-devel = %{version}-%{release}
+Requires: compat-gtksourceview-soname3 = %{version}-%{release}
 
 %description dev
 dev components for the compat-gtksourceview-soname3 package.
@@ -72,10 +71,19 @@ doc components for the compat-gtksourceview-soname3 package.
 %package lib
 Summary: lib components for the compat-gtksourceview-soname3 package.
 Group: Libraries
-Requires: compat-gtksourceview-soname3-data
+Requires: compat-gtksourceview-soname3-data = %{version}-%{release}
+Requires: compat-gtksourceview-soname3-license = %{version}-%{release}
 
 %description lib
 lib components for the compat-gtksourceview-soname3 package.
+
+
+%package license
+Summary: license components for the compat-gtksourceview-soname3 package.
+Group: Default
+
+%description license
+license components for the compat-gtksourceview-soname3 package.
 
 
 %package locales
@@ -95,14 +103,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1526007740
+export SOURCE_DATE_EPOCH=1556995442
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
-export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CFLAGS="$CFLAGS -O3 -Os -fcf-protection=full -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong "
+export FCFLAGS="$CFLAGS -O3 -Os -fcf-protection=full -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong "
+export FFLAGS="$CFLAGS -O3 -Os -fcf-protection=full -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong "
+export CXXFLAGS="$CXXFLAGS -O3 -Os -fcf-protection=full -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong "
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -114,8 +122,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1526007740
+export SOURCE_DATE_EPOCH=1556995442
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/compat-gtksourceview-soname3
+cp COPYING %{buildroot}/usr/share/package-licenses/compat-gtksourceview-soname3/COPYING
 %make_install
 %find_lang gtksourceview-3.0
 
@@ -318,7 +328,7 @@ rm -rf %{buildroot}
 /usr/lib64/pkgconfig/gtksourceview-3.0.pc
 
 %files doc
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/gtk-doc/html/gtksourceview-3.0/GtkSourceBuffer.html
 /usr/share/gtk-doc/html/gtksourceview-3.0/GtkSourceCompletion.html
 /usr/share/gtk-doc/html/gtksourceview-3.0/GtkSourceCompletionContext.html
@@ -390,6 +400,10 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 /usr/lib64/libgtksourceview-3.0.so.1
 /usr/lib64/libgtksourceview-3.0.so.1.8.0
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/compat-gtksourceview-soname3/COPYING
 
 %files locales -f gtksourceview-3.0.lang
 %defattr(-,root,root,-)
