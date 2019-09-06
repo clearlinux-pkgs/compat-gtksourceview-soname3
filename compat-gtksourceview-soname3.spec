@@ -4,7 +4,7 @@
 #
 Name     : compat-gtksourceview-soname3
 Version  : 3.24.7
-Release  : 32
+Release  : 33
 URL      : https://download.gnome.org/sources/gtksourceview/3.24/gtksourceview-3.24.7.tar.xz
 Source0  : https://download.gnome.org/sources/gtksourceview/3.24/gtksourceview-3.24.7.tar.xz
 Summary  : Source code editing widget
@@ -33,6 +33,8 @@ BuildRequires : vala
 BuildRequires : vala-bin
 BuildRequires : vala-dev
 BuildRequires : valgrind
+# Suppress generation of debuginfo
+%global debug_package %{nil}
 Patch1: cve-2017-14108.patch
 
 %description
@@ -102,27 +104,28 @@ locales components for the compat-gtksourceview-soname3 package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1556995442
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1567809236
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Os -fcf-protection=full -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong "
-export FCFLAGS="$CFLAGS -O3 -Os -fcf-protection=full -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong "
-export FFLAGS="$CFLAGS -O3 -Os -fcf-protection=full -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong "
-export CXXFLAGS="$CXXFLAGS -O3 -Os -fcf-protection=full -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong "
+export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1556995442
+export SOURCE_DATE_EPOCH=1567809236
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-gtksourceview-soname3
 cp COPYING %{buildroot}/usr/share/package-licenses/compat-gtksourceview-soname3/COPYING
