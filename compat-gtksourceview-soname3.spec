@@ -4,7 +4,7 @@
 #
 Name     : compat-gtksourceview-soname3
 Version  : 3.24.7
-Release  : 34
+Release  : 35
 URL      : https://download.gnome.org/sources/gtksourceview/3.24/gtksourceview-3.24.7.tar.xz
 Source0  : https://download.gnome.org/sources/gtksourceview/3.24/gtksourceview-3.24.7.tar.xz
 Summary  : Source code editing widget
@@ -98,6 +98,7 @@ locales components for the compat-gtksourceview-soname3 package.
 
 %prep
 %setup -q -n gtksourceview-3.24.7
+cd %{_builddir}/gtksourceview-3.24.7
 %patch1 -p1
 
 %build
@@ -105,14 +106,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1567809236
+export SOURCE_DATE_EPOCH=1586223820
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$FFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$FFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
 export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static
 make  %{?_smp_mflags}
@@ -125,10 +126,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1567809236
+export SOURCE_DATE_EPOCH=1586223820
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-gtksourceview-soname3
-cp COPYING %{buildroot}/usr/share/package-licenses/compat-gtksourceview-soname3/COPYING
+cp %{_builddir}/gtksourceview-3.24.7/COPYING %{buildroot}/usr/share/package-licenses/compat-gtksourceview-soname3/caeb68c46fa36651acf592771d09de7937926bb3
 %make_install
 %find_lang gtksourceview-3.0
 
@@ -406,7 +407,7 @@ cp COPYING %{buildroot}/usr/share/package-licenses/compat-gtksourceview-soname3/
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/compat-gtksourceview-soname3/COPYING
+/usr/share/package-licenses/compat-gtksourceview-soname3/caeb68c46fa36651acf592771d09de7937926bb3
 
 %files locales -f gtksourceview-3.0.lang
 %defattr(-,root,root,-)
