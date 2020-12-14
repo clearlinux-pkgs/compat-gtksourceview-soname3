@@ -4,7 +4,7 @@
 #
 Name     : compat-gtksourceview-soname3
 Version  : 3.24.7
-Release  : 37
+Release  : 38
 URL      : https://download.gnome.org/sources/gtksourceview/3.24/gtksourceview-3.24.7.tar.xz
 Source0  : https://download.gnome.org/sources/gtksourceview/3.24/gtksourceview-3.24.7.tar.xz
 Summary  : Source code editing widget
