@@ -4,7 +4,7 @@
 #
 Name     : compat-gtksourceview-soname3
 Version  : 3.24.7
-Release  : 43
+Release  : 44
 URL      : https://download.gnome.org/sources/gtksourceview/3.24/gtksourceview-3.24.7.tar.xz
 Source0  : https://download.gnome.org/sources/gtksourceview/3.24/gtksourceview-3.24.7.tar.xz
 Summary  : Source code editing widget
@@ -31,7 +31,6 @@ BuildRequires : pkgconfig(libxml-2.0)
 BuildRequires : vala
 BuildRequires : vala-bin
 BuildRequires : vala-dev
-BuildRequires : valgrind
 # Suppress generation of debuginfo
 %global debug_package %{nil}
 Patch1: cve-2017-14108.patch
@@ -105,7 +104,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1647635724
+export SOURCE_DATE_EPOCH=1664141823
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -125,10 +124,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1647635724
+export SOURCE_DATE_EPOCH=1664141823
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-gtksourceview-soname3
-cp %{_builddir}/gtksourceview-3.24.7/COPYING %{buildroot}/usr/share/package-licenses/compat-gtksourceview-soname3/caeb68c46fa36651acf592771d09de7937926bb3
+cp %{_builddir}/gtksourceview-%{version}/COPYING %{buildroot}/usr/share/package-licenses/compat-gtksourceview-soname3/caeb68c46fa36651acf592771d09de7937926bb3 || :
 %make_install
 %find_lang gtksourceview-3.0
 
